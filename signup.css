@@ -1,0 +1,191 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+body{
+  /* background-color: #173157c4; */
+  background-color: #112441da;
+}
+
+
+.header {
+  /* background-color: rgb(27, 19, 83); */
+  background-color: rgb(11, 11, 42);
+  position:sticky;
+  top:1px;
+  color: rgb(255, 255, 255);
+  min-height: 10vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 150px;
+  font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  
+}
+
+
+.section{
+  display: flex;
+  flex-direction: row;
+}
+.heroimg{
+  padding-top: 30px;
+  margin-left: 100px;
+}
+.container{
+  
+  background-color: rgba(255, 255, 255, 0.479);
+  width: 40%;
+  height: 550px;
+  margin: 45px 50px;
+  /* margin : 10px auto; */
+  border-radius: 10px;
+  
+  
+}
+.container h2,h1,p,h3{
+  text-align: center;
+}
+.navigationbtn{
+  margin:20px 0px;
+  display: flex;
+  flex-direction: row;
+  /* background-color: #320433; */
+  font-size: 30px;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+}
+.navigationbtn h3{
+  padding: 0px 80px;
+}
+.btns{
+  width: 40%;
+  padding: 10px 10px;
+  font-size: 20px;
+  border: 2px solid black;
+  cursor: pointer;
+  /* padding: 0; */
+}
+.btns a{
+  width: 100%;
+}
+.btns a{
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  font-size: 20px;
+}
+p{
+  font-size: 17px;
+}
+.input,form input{
+  width: 80%;
+  margin: 10px auto;
+  padding: 5px;
+  font-size: 15px;
+  border: 2px solid black;
+  outline: none;
+  border-radius: 6px;
+  
+}
+form{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.btn{
+  background-color: #4CAF50;
+  color: aliceblue;
+  padding: 8px 10px;
+  font-size: 20px;
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 14px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+.submitmsg{
+  font-size: 25px;
+  font-weight: bolder;
+  color: rgb(255, 54, 54);
+
+}
+.loginbtn {
+  position: absolute;
+  right: 40px;
+  background-color: #4CAF50; /* Green background */
+  border: none;
+  color: white; /* White text */
+  padding: 15px 20px; /* Padding */
+  text-align: center; /* Center text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Display as inline-block */
+  font-size: 16px; /* Font size */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition */
+}
+.loginbtn:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+/* LOGIN PAGE CSS */
+.logincontainer{
+  margin: 85px auto;
+  height: 500px;
+  width: 30%;
+  padding: 30px;
+}
+.passwordicon{
+  display: block;
+  margin: 0px auto;
+  border-radius: 100px;
+  background-color: #9EB1CA;
+  width: 150px;
+  height: 150px;
+  
+}
+.logincontainer form input{
+  width: 80%;
+  margin:  0px;
+  padding: 5px;
+  font-size: 15px;
+  border: 2px solid black;
+  outline: none;
+  border-radius: 6px;
+
+}
+@media screen and (max-width: 830px) {
+  .header{
+    flex-direction: column;
+  }
+  .loginbtn{
+    right: 0;
+    background-color: #112441da;
+    color: rgb(255, 1, 1);
+    font-weight: bolder;
+  }
+  .section{
+    flex-direction: column;
+  }
+  .heroimg{
+    display: none;
+  }
+  .container{
+    width:80%;
+    margin: 5px auto;
+  }
+  .navigationbtn{
+    flex-direction: column;
+  }
+  .btns{
+    width: 80%;
+    
+    font-size: 15px;
+  }
+}
+
+
