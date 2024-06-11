@@ -113,7 +113,7 @@
             <label for="online">Online</label>
         </div>
 
-        <button type="submit">Create Slots</button>
+        <button type="submit">Create Slot</button>
     </form>
 
 
