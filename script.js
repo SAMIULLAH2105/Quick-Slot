@@ -25,3 +25,8 @@ navimage.addEventListener('click', function() {
     menuonclick.style.display = "none";
   }
 });
+
+
+
+
+

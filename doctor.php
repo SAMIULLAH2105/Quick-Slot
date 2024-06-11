@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,14 +11,18 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            /* background-color: #f4f4f4; */
+            
+  background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 50%,#4a77b7 100%);
         }
 
         header {
             background-color: rgb(11, 11, 42);
             color: white;
             padding: 10px;
-            text-align: center;
+            display:flex;
+            justify-content:center;
+            align-items:center;
             position: relative;
         }
 
@@ -63,30 +69,43 @@
             box-sizing: border-box;
         }
 
-        button {
+        #slotbtn {
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
         }
 
-        button:hover {
+        #slotbtn:hover {
             background-color: #45a049;
         }
         .mode-selection label{
             display: inline-block;
             margin-right: 20px;
         }
+        .logoutbtn{
+            background-color: #4CAF50;
+            position: absolute;
+            width:100px;
+            top:10px;
+            right:10px;
+            border: none;
+            cursor: pointer;
+        }
         
     </style>
 </head>
 <body>
-    <header>
-        <h1>QUICKSLOT</h1>
-        
-        <img src="logo.png" alt="Doctor Info Logo">
-    </header>
+    
+    <header class="header">
+    
+        <h1>QUICK SLOT</h1>
 
+        <button class="logoutbtn" onclick="window.location.href='login.php'">Log-Out</button>
+        
+    </header>
+        
+    <img src="./Images/account.png" alt="not found" style="width:35px;filter: invert(100%); margin-left:5px">
     <h2>Create Opening Slots</h2>
     <form action="" method="post">
         <label for="date">Date:</label>
@@ -113,15 +132,14 @@
             <label for="online">Online</label>
         </div>
 
-        <button type="submit">Create Slot</button>
+        <button type="submit" id="slotbtn">Create Slots</button>
     </form>
-
 
 <?php
 session_start();
+
 $userid = $_SESSION['user_id'];
 
-// $row['id']=$_GET['user_id'];
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Establish connection to MySQL database
     $servername = "localhost"; // Change this to your server name
@@ -146,7 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mode = $_POST['mode'];
 
     // Prepare and execute SQL statement to insert data into the table
-    $sql = "INSERT INTO  `appointmentslots`(SlotID, DoctorID, Date, StartTime, EndTime, MaxPatients, Place, Mode) VALUES (NULL, '$userid', '$date', '$start_time', '$end_time', '$max_patients', '$place', '$mode')";
+    $sql = "INSERT INTO appointmentslots (SlotID, DoctorID, Date, StartTime, EndTime, MaxPatients, Place, Mode) VALUES (NULL, '$userid', '$date', '$start_time', '$end_time', '$max_patients', '$place', '$mode')";
 
     if ($conn->query($sql) === TRUE) {
         echo "New record created successfully";
@@ -157,6 +175,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     $conn->close();
 }
+
+// Fetch and display booked appointments
+$servername = "localhost"; // Change this to your server name
+$username = "root"; // Change this to your MySQL username
+$password = ""; // Change this to your MySQL password
+$database = "patient"; // Change this to your MySQL database name
+
+$conn = new mysqli($servername, $username, $password, $database);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Add debug output to verify the DoctorID
+echo "Debug: DoctorID = $userid<br>";
+
+$fetchAppointmentsSql = "SELECT SlotStartTime, SlotEndTime, BookingDate, BookingStatus FROM appointmentBooked WHERE DoctorID = '$userid'";
+echo "Debug: SQL Query = $fetchAppointmentsSql<br>";
+
+$result = $conn->query($fetchAppointmentsSql);
+
+if ($result->num_rows > 0) {
+    echo "<h2>Booked Appointments</h2>";
+    echo "<table border='1' style='width: 80%; margin: 20px auto; text-align: center;'>";
+    echo "<tr><th>Start Time</th><th>End Time</th><th>Booking Date</th><th>Booking Status</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['SlotStartTime'] . "</td>";
+        echo "<td>" . $row['SlotEndTime'] . "</td>";
+        echo "<td>" . $row['BookingDate'] . "</td>";
+        echo "<td>" . $row['BookingStatus'] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "No booked appointments found.";
+}
+
+$conn->close();
 ?>
 
 </body>
