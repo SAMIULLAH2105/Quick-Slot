@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Video Consultation</title>
+    
+    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
     <script src="booking.js"></script>
     <style>
         /* CSS styling for doctor profile */
@@ -212,6 +214,7 @@ if ($result->num_rows > 0) {
                 <p><strong>Available:</strong> <?php echo $row["StartTime"] , " - ",$row["EndTime"]; ?></p>
                 <p><strong>Max Patients:</strong> <?php echo $row["MaxPatients"]; ?></p>
                 <p><strong>Mode:</strong> <?php echo $row["Mode"]; ?></p>
+
                 
             </div>
             <div>

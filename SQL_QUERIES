@@ -1,0 +1,138 @@
+-- ***************  QUICK-SLOT SQL QUERIES  *************** --
+
+CREATE TABLE patient (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    age INT(11),
+    gender VARCHAR(20),
+    email VARCHAR(255),
+    phone VARCHAR(20),
+    password VARCHAR(255) NOT NULL,
+    dt TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE doctor (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    age DATE NOT NULL,
+    doctorcategory VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    dt TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE appointmentslots (
+    SlotID INT(11) NOT NULL AUTO_INCREMENT,
+    DoctorID INT(11),
+    Date DATE,
+    StartTime TIME,
+    EndTime TIME,
+    MaxPatients INT(11),
+    Place VARCHAR(255),
+    Mode VARCHAR(255),
+    PRIMARY KEY (SlotID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctor(id)
+);
+
+CREATE TABLE appintmentbooked (
+    BookingID INT(11) NOT NULL AUTO_INCREMENT,
+    DoctorID INT(11),
+    PatientID INT(11),
+    SlotStartTime TIME,
+    SlotEndTime TIME,
+    BookingDate DATE,
+    BookingStatus VARCHAR(50),
+    PRIMARY KEY (BookingID),
+    FOREIGN KEY (DoctorID) REFERENCES Doctor(id),
+    FOREIGN KEY (PatientID) REFERENCES Patient(id)
+);
+
+CREATE TABLE reviews (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    doctor_name VARCHAR(255),
+    rating INT(11),
+    comment TEXT,
+    created_at TIMESTAMP,
+    PRIMARY KEY (id)
+);
+
+
+-- Inserting Data of new patient in patient table during sign-up
+INSERT INTO `patient`.`patient` (`name`, `age`, `gender`, `email`, `phone`, `password`, `dt`) VALUES ('$name', '$age', '$gender', '$email', '$phone', '$hashedPassword', current_timestamp())
+
+
+-- Inserting Data of new doctor in doctor table during sign-up
+INSERT INTO `doctor` (`id`, `name`, `gender`, `age`, `doctorcategory`, `email`, `phone`, `password`, `dt`) 
+VALUES (NULL, '$name', '$gender', '$age', '$doctorcategory', '$email', '$phone', '$hashedPassword', current_timestamp())
+
+
+-- Fetching password and verifying it for the login process
+SELECT * FROM patient WHERE `email`='$email'
+SELECT * FROM doctor  WHERE `email`='$email'
+
+
+-- Searching by Doctors Name or Category when mode is physical
+SELECT d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode
+FROM doctor d
+JOIN appointmentslots a ON d.id = a.DoctorID
+WHERE (d.name LIKE '%$search_query%' OR d.doctorcategory LIKE '%$search_query%') AND a.Mode = 'physical'
+
+
+-- Without Searching showing all results when mode is physical
+SELECT d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode
+FROM doctor d
+JOIN appointmentslots a ON d.id = a.DoctorID
+WHERE a.Mode = 'physical' 
+
+
+-- Searching by Doctors Name or Category when mode is online
+SELECT d.id, d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode, a.SlotID
+FROM doctor d
+JOIN appointmentslots a ON d.id = a.DoctorID
+WHERE (d.name LIKE '%$search_query%' OR d.doctorcategory LIKE '%$search_query%') AND a.Mode = 'online'
+
+
+-- Without Searching showing all results when mode is online
+SELECT d.id, d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode, a.SlotID
+FROM doctor d
+JOIN appointmentslots a ON d.id = a.DoctorID
+WHERE a.Mode = 'online'
+
+
+-- Fetching name of a particular patient on the basis of his/her ID.
+SELECT name FROM patient WHERE id = $userid
+
+
+-- Fetching appointment booked by a particular patient on the basis of his/her ID.
+SELECT d.name AS doctor_name, d.email AS doctor_email, d.doctorcategory, d.phone,
+ab.BookingID AS BookingID, ab.SlotStartTime, ab.SlotEndTime
+FROM appointmentbooked ab
+JOIN doctor d ON ab.DoctorID = d.id
+WHERE ab.PatientID = $userid
+
+
+-- Deleting a users particular appointment in which he/she donot is not interested anymore.
+DELETE FROM appointmentbooked WHERE BookingID = '$booking_id_to_delete'
+
+
+-- Inserting Appointment slot data into table which is given by a doctor
+INSERT INTO appointmentslots (SlotID, DoctorID, Date, StartTime, EndTime, MaxPatients, Place, Mode) VALUES (NULL, '$userid', 
+'$date','$start_time', '$end_time', '$max_patients', '$place', '$mode')
+
+
+-- Fetching all booked appointments of a particular Doctor on the basis od his/her unique id.
+SELECT SlotStartTime, SlotEndTime, BookingDate, BookingStatus FROM appointmentBooked WHERE DoctorID = '$userid'
+
+
+
+
+
+

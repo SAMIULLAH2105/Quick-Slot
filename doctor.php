@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -105,7 +106,7 @@
         
     </header>
         
-    <img src="./Images/account.png" alt="not found" style="width:35px;filter: invert(100%); margin-left:5px">
+    <!-- <img src="./Images/account.png" alt="not found" style="width:35px;filter: invert(100%); margin-left:5px"> -->
     <h2>Create Opening Slots</h2>
     <form action="" method="post">
         <label for="date">Date:</label>
@@ -188,11 +189,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Add debug output to verify the DoctorID
-echo "Debug: DoctorID = $userid<br>";
+// echo "Debug: UserID = $userid<br>";
 
 $fetchAppointmentsSql = "SELECT SlotStartTime, SlotEndTime, BookingDate, BookingStatus FROM appointmentBooked WHERE DoctorID = '$userid'";
-echo "Debug: SQL Query = $fetchAppointmentsSql<br>";
+// echo "Debug: SQL Query = $fetchAppointmentsSql<br>";
 
 $result = $conn->query($fetchAppointmentsSql);
 

@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
     <title>Laboratory Tests</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+            /* background-color: #f2f2f2; */
+            
+            background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 25%, #c4dcfe 85%,#4a77b7 100%); 
+            
         }
         .container {
             max-width: 800px;

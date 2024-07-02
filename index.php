@@ -1,41 +1,26 @@
-    <!-- signup page -->
+    <!-- signup page of patient -->
 
     <!DOCTYPE html>
     <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="signup.css">
+        <link rel="stylesheet" href="signup.css"> 
+        <link rel="icon" type="image/x-icon" href="./Images/logo.png" />
         <title>Welcome to Quick Slot</title>
     </head>
     <body>
         <header class="header">
 
         <h1>QUICK SLOT</h1>
-
         <button class="loginbtn" onclick="window.location.href='login.php'">LOG-IN</button>
-
-        <!-- <ul>
-            <li>Home</li>
-            <li>Doctors</li>
-            <li>Review</li>
-            <li>Contact</li>
-            <li><a href="./Navigations/About.html">About us</a></li>
-        </ul>
-
-        <input type="text" placeholder="Search" class="search"> -->
-
-    </header>
+       </header>
 
     <div class="section">
 
         <div class="heroimg">
-            
                     <img src="./Images/doc2.png" alt="">
         </div>
-        
-        
-        
         
 
         <div class="container">
@@ -122,5 +107,6 @@ if(isset($_POST['name'])) {
     </div>
 
     <script src="script.js"></script>
+    <script src="formValidation.js"></script>
     </body>
     </html>

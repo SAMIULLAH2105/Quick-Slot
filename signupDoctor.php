@@ -66,6 +66,7 @@ if(isset($_POST['name'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="signup.css">
+    <link rel="icon" type="image/x-icon" href="./Images/logo.png" />
     <title>Welcome to Quick Slot</title>
 </head>
 

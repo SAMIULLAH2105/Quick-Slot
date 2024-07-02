@@ -6,7 +6,9 @@
 }
 body{
   /* background-color: #173157c4; */
-  background-color: #112441da;
+  /* background-color: #112441da; */
+  
+  background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 50%,#4a77b7 100%);
 }
 
 
@@ -119,7 +121,7 @@ form{
   background-color: #4CAF50; /* Green background */
   border: none;
   color: white; /* White text */
-  padding: 15px 20px; /* Padding */
+  padding: 10px 15px; /* Padding */
   text-align: center; /* Center text */
   text-decoration: none; /* Remove underline */
   display: inline-block; /* Display as inline-block */
@@ -159,12 +161,17 @@ form{
 
 }
 @media screen and (max-width: 830px) {
+
+  
   .header{
     flex-direction: column;
+    margin-bottom: 80x;
   }
   .loginbtn{
-    right: 0;
+    right: 10px;
+    padding: 2px;
     background-color: #112441da;
+    border: 2px solid black;
     color: rgb(255, 1, 1);
     font-weight: bolder;
   }
@@ -176,7 +183,7 @@ form{
   }
   .container{
     width:80%;
-    margin: 5px auto;
+    margin: 25px auto;
   }
   .navigationbtn{
     flex-direction: column;
@@ -185,6 +192,11 @@ form{
     width: 80%;
     
     font-size: 15px;
+  }
+  .btn{
+    height: 30px;
+    padding: 0px 6px;
+    border-radius: 4px;
   }
 }
 

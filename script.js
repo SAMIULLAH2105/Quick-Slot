@@ -1,3 +1,5 @@
+// Script for hidden menu which will appear on devices with widht less than 834
+
 var navimage = document.getElementById("myImage");
 var menuonclick = document.getElementById('menuonclick');
 
@@ -25,6 +27,9 @@ navimage.addEventListener('click', function() {
     menuonclick.style.display = "none";
   }
 });
+
+
+
 
 
 

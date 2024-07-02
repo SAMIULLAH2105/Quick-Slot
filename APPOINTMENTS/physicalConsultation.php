@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physical Consultation</title>
+    <title>Video Consultation</title>
+    
+    <link rel="icon" type="image/x-icon" href="../Images/logo.png" />
+    <script src="booking.js"></script>
     <style>
         /* CSS styling for doctor profile */
 /* CSS styling for doctor-appointment-container */
@@ -140,7 +143,7 @@ form{
 <body>
 
 <header class="header">
-    <h1>QUICK SLOT</h1>
+    <h1 >QUICK SLOT</h1>
 </header>
 
 <form method="GET" action="">
@@ -151,6 +154,9 @@ form{
 <!-- <h1 class="mainhead">APPOINTMENT</h1> -->
     
 <?php
+session_start();
+
+$userid = $_SESSION['user_id'];
 
 function calculateAge($dob) {
     $dob = new DateTime($dob);
@@ -158,55 +164,46 @@ function calculateAge($dob) {
     $interval = $now->diff($dob);
     return $interval->y; // Return years from the interval
 }
-// Establish connection to MySQL database
-$servername = "localhost"; // Change this to your server name
-$username = "root"; // Change this to your MySQL username
-$password = ""; // Change this to your MySQL password
-$database = "patient"; // Change this to your MySQL database name
 
-// Create connection
+$servername = "localhost"; // Your MySQL server name
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$database = "patient"; // Your MySQL database name
+
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if a search query is submitted
 if(isset($_GET['search_query'])) {
     $search_query = $_GET['search_query'];
-    // Modify SQL query to include search conditions
-    $sql = "SELECT d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
-               a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode
+    $sql = "SELECT d.id, d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+               a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode, a.SlotID
             FROM doctor d
             JOIN appointmentslots a ON d.id = a.DoctorID
             WHERE (d.name LIKE '%$search_query%' OR d.doctorcategory LIKE '%$search_query%') AND a.Mode = 'physical'";
 } else {
-    // Default SQL query if no search query is provided
-    $sql = "SELECT d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
-               a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode
+    $sql = "SELECT d.id, d.name AS doctor_name, d.gender, d.age, d.doctorcategory, d.email AS doctor_email, d.phone AS doctor_phone,
+               a.Date, a.StartTime, a.EndTime, a.MaxPatients, a.Place, a.Mode, a.SlotID
             FROM doctor d
             JOIN appointmentslots a ON d.id = a.DoctorID
             WHERE a.Mode = 'physical'";
 }
 
-
-
-// Execute SQL query
 $result = $conn->query($sql);
 
-// Check if there are any available appointments
 if ($result->num_rows > 0) {
-    // Output data of each row
     while ($row = $result->fetch_assoc()) {
         $age = calculateAge($row["age"]);
 ?>
+
+
         <div class='doctor-appointment-container'>
             <div class='doctor-profile'>
                 <h2>Doctor Profile</h2>
                 <p><strong>Name:</strong> Dr. <?php echo ucfirst($row["doctor_name"]); ?></p>
                 <p><strong>Gender:</strong> <?php echo $row["gender"]; ?></p>
-                
                 <p><strong>Age:</strong> <?php echo $age; ?></p>
                 <p><strong>Category:</strong> <?php echo $row["doctorcategory"]; ?></p>
                 <p><strong>Email:</strong> <?php echo $row["doctor_email"]; ?></p>
@@ -214,23 +211,20 @@ if ($result->num_rows > 0) {
             <div class='appointment-details'>
                 <h2>Appointment Details</h2>
                 <p><strong>Date:</strong> <?php echo $row["Date"]; ?></p>
-                <p><strong>Availabe :</strong> <?php echo $row["StartTime"] , " - ",$row["EndTime"]; ?></p>
+                <p><strong>Available:</strong> <?php echo $row["StartTime"] , " - ",$row["EndTime"]; ?></p>
                 <p><strong>Max Patients:</strong> <?php echo $row["MaxPatients"]; ?></p>
                 <p><strong>Mode:</strong> <?php echo $row["Mode"]; ?></p>
-            </div>
 
+                
+            </div>
             <div>
-                <button class="btn" >Book Appointment</button>
+            
+
+            <button class="btn" onclick="bookAppointment(<?php echo $row['id']; ?>, <?php echo $row['SlotID']; ?>, <?php echo $userid; ?>)">Book Appointment</button>
+            
                 <br>
 
-                <?php
-                $doctor_phone = $row["doctor_phone"]; // Example phone number
-
-                // Prepending country code
-                $country_code = "+92";
-                $full_phone_number = $country_code . substr($doctor_phone, 1);
-                ?>
-                <button class="btn"><a href="whatsapp://send?phone=<?php echo $full_phone_number; ?>">Video Call</a></button>
+                
             </div>
         </div>
 <?php
@@ -239,9 +233,9 @@ if ($result->num_rows > 0) {
     echo "No available appointments";
 }
 
-// Close connection
 $conn->close();
 ?>
+
 
 </body>
 </html>

@@ -56,7 +56,6 @@ if ($conn->connect_error) {
         <li><a href="#review">Reviews</a></li>
         <li><a href="#footer">Contact</a></li>
         <li><a href="./login.php">log Out</a></li>
-        
       </ul>
       
        <div class="personalDetail" style="display:flex; justify-content:center;align-items:center; ">
@@ -128,7 +127,7 @@ if ($result->num_rows > 0) {
 
                     <button type="submit" name="cancel" class="btn" onclick="return confirm('Are you sure you want to cancel this appointment?');"> &#10006</button>
                      
-                    <button class="videoCallBtn"><a href="whatsapp://send?phone=<?php echo $full_phone_number; ?>">Video Call</a></button>
+                    <button class="videoCallBtn"><a href="whatsapp://send?phone=<?php echo $full_phone_number; ?>">Contact</a></button>
                 </div>
             </form>
         </div>
@@ -337,6 +336,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       echo "";
   }
 }
+
+
+$reviewFetching = "SELECT doctor_name, rating, comment FROM reviews";
+$result = $conn->query($reviewFetching);
+
+if ($result->num_rows > 0) {
+    echo "<h2>Reviews</h2>";
+    echo "<table>";
+    echo "<tr><th>Doctor</th><th>Rating</th><th>Comment</th></tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row['doctor_name'] . "</td>"; // Changed 'doc_name' to 'doctor_name'
+        echo "<td>" . $row['rating'] . "</td>";
+        echo "<td>" . $row['comment'] . "</td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<p>No booked appointments found.</p>";
+}
+
 ?>
 
 
@@ -375,7 +395,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       </div>
   </footer>
   
-
 
 
 

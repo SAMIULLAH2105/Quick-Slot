@@ -10,17 +10,26 @@ body{
   
   /* background-color: #a3b9dada; */
   /* background-color: rgb(223, 237, 241); */
-  background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 50%,#4a77b7 100%);
-  /* background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 70%,#c7c6e4 100%); */
+  /* background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 50%,#4a77b7 100%);
+   */
+   
+   /* background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 50%,#4a77b7 100%);
+    */
+    
+    background-image: linear-gradient(to top,  #5b54b4 0%, #c4dcfe 25%, #c4dcfe 80%,#4a77b7 100%); 
+  /* background-color: #fff8ef; */
+  /* background-image: linear-gradient(to top,  #31303b 0%, #a9aaac 70%,#707375 100%); */
+ 
   /* background-image: linear-gradient(to bottom,  #c6b9cb 0%, #bec5ce 100%); */
-
+  font-family: sans-serif;
    
   
   
 
-  
-  
-  /* background-image: url(./Images/bg.jpg); */
+background-repeat: no-repeat;
+
+  backdrop-filter: blur(2px);
+  background-size:cover;
   /* background: rgba(0, 0, 0, 0.5) url(./Images/bg.jpg); */
   /* background-color: rgba(255, 255, 255, 0.9); */
   color: black;
@@ -609,6 +618,50 @@ z-index: 999; /* Ensure it covers the background */
 
 
 
+
+
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+}
+tr:hover {
+  background-color: #f1f1f1;
+}
+@media screen and (max-width: 600px) {
+  table, thead, tbody, th, td, tr {
+      display: block;
+  }
+  tr {
+      margin-bottom: 15px;
+  }
+  th {
+      background: #f1f1f1;
+      font-weight: bold;
+  }
+  td {
+      text-align: right;
+      padding-left: 50%;
+      position: relative;
+  }
+  td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0;
+      width: 50%;
+      padding-left: 15px;
+      font-weight: bold;
+      text-align: left;
+  }
+}
 
 
 
